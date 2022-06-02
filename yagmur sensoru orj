@@ -1,0 +1,36 @@
+int buzzer = 9;          //DEĞİŞKENLER
+int sensorPin = A0;
+int deger;
+int ledPin=8;
+int Eskideger = 15;
+
+void setup() { 
+pinMode(ledPin, OUTPUT);    //PİN ÇIKIŞI
+pinMode(sensorPin, INPUT);  //PİN GİRİŞİ
+digitalWrite(ledPin, LOW);  //LEDE 0 DEĞERİNİ ATADIK
+
+  Serial.begin(9600);       //HABERLEŞME HIZI
+
+ } 
+void loop() {
+deger = map(analogRead(sensorPin),1023,0,0,100);  //ANALOG DEĞERİNİ 100 YAPTIK
+  Serial.print("Nem1 : %");                       //SERİAL TABLOYA DEĞER YAZDIRDIK
+  Serial.println(deger);
+
+
+  if(deger > Eskideger)
+  {
+    digitalWrite(ledPin, HIGH);                  //EĞER DEĞER ESKİ DEĞERDEN YÜKSEK OLURSA LED YANICAK
+    digitalWrite(buzzer, HIGH);               //EĞER DEĞER ESKİ DEĞERDEN YÜKSEK OLURSA BUZZER ÇALIŞICAK
+    tone(buzzer,70);                            // BUZZER NOTA DEĞERİ
+    delay(1000);
+    noTone(buzzer);
+  }
+  else
+  {
+    digitalWrite(ledPin, LOW);                  //EĞER DEĞER ESKİ DEĞERDEN YÜKSEK DEĞİL İSE LED YANMICAK
+    digitalWrite(buzzer, LOW);               //EĞER DEĞER ESKİ DEĞERDEN YÜKSEK DEĞİL İSE BUZZER ÇALIŞMIYACAK
+    
+  }
+
+}
